@@ -54,6 +54,7 @@ function connectToNodeServer() {
 
 	g_socket.on('user disconnected', function(socketId) {
 		$('#remote-videos-div video[data-video-id="' + socketId + '"]').parent().remove();
+		$('#remote-video').prop('src', null);
 	});
 
 	g_socket.on('videocall offer/answer', function(data) {
