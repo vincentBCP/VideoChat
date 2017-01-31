@@ -30,7 +30,7 @@ function setRoom() {
 }
 
 function connectToNodeServer() {
-	g_socket = io.connect('localhost:5000/', {secure: true});
+	g_socket = io.connect('https://pacific-forest-63486.herokuapp.com/');
 
 	g_socket.on('joined', function(socketId) {
 		g_socketId = socketId;
