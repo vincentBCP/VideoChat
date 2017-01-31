@@ -191,3 +191,7 @@ function createRemotePeerConnection(socketId, action, sd) {
         }
     }
 }
+
+function updateVideoDivs() {
+	$('.remote-video').css('height', $('.remote-video').width());
+}

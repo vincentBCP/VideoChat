@@ -24,7 +24,7 @@
         <script type="text/javascript" src='js/videochat.js'></script>
     </head>
     
-    <body>
+    <body onresize='updateVideoDivs()'>
         <div id='templates' style='display: none;'>
             <div id='remote-video-div'>
                 <div class='remote-video'>
