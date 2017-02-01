@@ -29,6 +29,7 @@
             <div id='remote-video-div'>
                 <div class='remote-video'>
                     <video autoplay></video>
+                    <span></span>
                 </div>
             </div>
         </div>
@@ -47,11 +48,25 @@
             </div>
         </div>
 
+        <div id='messages-div' style='display: none;'>
+            <div id='users-div'>
+                <!--select>
+                    <option>All</option>
+                </select-->
+            </div>
+            <div id='messages'>
+            </div>
+            <div id='text-div'>
+                <textarea placeholder="Enter message and press <Enter> to send."></textarea>
+            </div>
+        </div>
+
         <div id='remote-videos-div' style='display: none;'>
         </div>
 
         <div id='get-room-div'>
             <span>VBCP Video Chat Service</span>
+            <input name='user-name' placeholder="Your name" /><br/>
             <input name='room-name' placeholder="Create or join room" /><br/>
             <button onclick='setRoom()'>Set</button>
         </div>
