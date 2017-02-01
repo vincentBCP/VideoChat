@@ -87,8 +87,8 @@ function connectToNodeServer() {
 	});
 
 	g_socket.on('user joined', function(data) {
-		createRemoteVideo(data.username, data.socketId);
-		createRemotePeerConnection(data.socketId, 'offer', null);
+		//createRemoteVideo(data.username, data.socketId);
+		createRemotePeerConnection(data.username, data.socketId, 'offer', null);
 	});
 
 	g_socket.on('user disconnected', function(socketId) {
@@ -99,8 +99,8 @@ function connectToNodeServer() {
 	g_socket.on('videocall offer/answer', function(data) {
 		if (data.to == g_socketId) {
 			if (data.type == "offer") {
-				createRemoteVideo(data.senderUsername, data.sender);
-				createRemotePeerConnection(data.sender, 'answer', data.sd);
+				//createRemoteVideo(data.senderUsername, data.sender);
+				createRemotePeerConnection(data.senderUsername, data.sender, 'answer', data.sd);
 				//console.log('received offer..');
 			} else if (data.type == "answer") {
 				g_remotePcs.forEach(function(val, key) {
@@ -173,7 +173,6 @@ function startLocal() {
 function createRemoteVideo(username, socketId) {
 	var remoteVideo = $($('#templates #remote-video-div').clone().html());
 	$(remoteVideo).find('video').attr('data-video-id', socketId);
-	$(remoteVideo).find('video').prop('data-video-id', socketId);
 	$(remoteVideo).find('span').text(username);
 	$('#remote-videos-div').append($(remoteVideo));
 	$(remoteVideo).css('height', $(remoteVideo).width());
@@ -196,7 +195,7 @@ function setLocalAndSendMessage(pc, sessionDescription, type/*offer or answer*/,
     	sender: sender, to: to});
 }
 
-function createRemotePeerConnection(socketId, action, sd) {
+function createRemotePeerConnection(username, socketId, action, sd) {
 	var pc = createPeerConnection();
     
     if(pc != null) {
@@ -218,6 +217,7 @@ function createRemotePeerConnection(socketId, action, sd) {
         remotePc.pc.onaddstream = function(event) {
         	remotePc.remoteStream = event.stream;
 
+        	createRemoteVideo(username, socketId);
             $('#remote-videos-div video[data-video-id="' + 
             	socketId + '"]').prop('src', window.URL.createObjectURL(remotePc.remoteStream));
         };
