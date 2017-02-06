@@ -130,7 +130,7 @@ body {
 }
 #get-room-div {
 	position: absolute;
-	width: 30vw;
+	width: 90vw;
 	padding: 15px;
 	border-radius: 5px;
 	background-color: white;
@@ -165,7 +165,7 @@ body {
 
 @media only screen and (min-width: 768px) {
 /*for desktop*/
-	#messages-div {
-
+	#get-room-div {
+		width: 30vw;
 	}
 }

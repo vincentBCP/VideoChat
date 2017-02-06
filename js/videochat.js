@@ -9,19 +9,38 @@ var g_username = '';
 var hasCamera = false;
 
 $(document).ready(function() {
+	if (window.location.protocol != "https:") {
+		window.location.href = "https://" + window.location.hostname + window.location.pathname;
+	}
+
 	//check if user has videoinput device (camera/webcam)
     navigator.mediaDevices.enumerateDevices().then(function(deviceInfos) {
         for (var i = 0; i !== deviceInfos.length; ++i) {
             var deviceInfo = deviceInfos[i];
 
-            if (deviceInfo.kind === 'videoinput') {
+            if (deviceInfo.kind == 'videoinput') {
                 hasCamera = true;
+                //for LAN accessibility
+			    /*$.ajax({
+			        type: 'post',
+			        url: window.location.href + '/getserverip.php'
+			    }).done(function(data){
+			        var d = JSON.parse(data);
+			        window.serverIp = d.ip;
+
+			        connectToNodeServer();
+			    }).fail(function(error){
+			        console.log(error);
+			    });*/
+                connectToNodeServer();
                 break;
             }
         }
-    }).catch(function(error) {});
 
-    connectToNodeServer();
+        if (!hasCamera) {
+			alert("Failed to detect camera input.");
+		}
+    }).catch(function(error) {});
 });
 
 $(document).on('click', '.remote-video video', function() {
@@ -70,7 +89,7 @@ function setSizes() {
 
 function connectToNodeServer() {
 	g_socket = io.connect('https://pacific-forest-63486.herokuapp.com/');
-
+	//g_socket = io.connect('https://' + window.serverIp + ':5000/');//for LAN accessibility
 	g_socket.on('joined', function(socketId) {
 		g_socketId = socketId;
 		$('#local-video-div').show();
