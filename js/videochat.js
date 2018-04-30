@@ -199,7 +199,13 @@ function createRemoteVideo(username, socketId) {
 
 function createPeerConnection() {
     try {
-        var pc = new RTCPeerConnection(null);
+		var configuration = {
+		  'iceServers': [{
+			'urls': 'stun.l.google.com:19302'
+		  }]
+		};
+
+        var pc = new RTCPeerConnection(configuration);
         return pc;
     } catch (e) {
         console.log('Failed to create PeerConnection, exception: ' + e.message);
